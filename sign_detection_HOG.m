@@ -9,12 +9,12 @@ close all;
 %step3: perform classification
 
 
-data_path='/sarvesh/umcp/enpm_673_robot_perception/projects/project2/part2/Training-20170329T192257Z-001/'
+data_path='<input_data_path>'
 
 train_data_path=fullfile(data_path,'Training');
 test_data_path=fullfile(data_path,'Testing');
 
-class_name={'00045','00021','00038','00035','00017','00001','00014','00019'};
+class_name={<class_names>};
 
 training_features=[];
 training_labels=[];
@@ -74,41 +74,30 @@ classifier=fitcecoc(training_features,training_labels);
 %-----------
 
 close all
-test_video_frame='/media/sarveshj/UBUNTU 16_0/Output_new/out_part2_orig';
-out_path='/sarvesh/Dropbox/codeRespositoryGit/gitRepository/enpm_673_robot_perception/project_2/out_part2_sign_recog';
+out_path='<output_path>;
 image_files_list=dir([test_video_frame '/*.jpg']);
    
-%for ii=1000:1200%size(image_files_list)
+
 for ii=1:size(image_files_list)
-%for ii=1
+
        %initialize label
         predictedLabels={};
-        %keep track of total number of training images
-        
-        %file_name='image.034067.jpg';
         
         file_name=image_files_list(ii).name;
         sprintf('predicting for %s',image_files_list(ii).name)
         % force the ordering
         
-        %image_path=fullfile(test_video_frame,strcat(int2str(ii),'.jpg'));
-        image_path=fullfile(test_video_frame,file_name);
+        image_path=fullfile(test_video_frame,strcat(int2str(ii),'.jpg'));
         image=imread(image_path); 
-        %imshow(image);
-        %error('done')
         
+              
         
-        %-------------------------------------------
-        %step 2: resize, extract HOG and train SVM
-        %-------------------------------------------
-        
-        
-        %resize_image=imresize(image,[64 64]);
-        %resize_image=imbinarize(rgb2gray(resize_image));
+        resize_image=imresize(image,[64 64]);
+        resize_image=imbinarize(rgb2gray(resize_image));
         
          
         % get the bounding boxes
-        bbox_list =function_compute_bbox(image);
+        bbox_list =function_compute_bbox(resize_image);
         
                
         if isempty(bbox_list)
@@ -116,9 +105,8 @@ for ii=1:size(image_files_list)
             disp('no bounding box detected ...');
             savePath=fullfile(out_path,file_name);
             imwrite(image, savePath );
-        else
-            
         
+        else
                 %for each bounding box train, as a class
                 for bbox_index=1:size(bbox_list,1)
                      %bb_image=imcrop()
@@ -146,12 +134,11 @@ for ii=1:size(image_files_list)
                     label=class_name{1,predict(classifier, testing_features)};   
                     predictedLabels{bbox_index} =  label;
                 
-                end
+           end
                     
                 
                     f=figure;
                     set(f,'Visible','off');
-                    
                     imshow(insertObjectAnnotation(image, 'rectangle',bbox_list,predictedLabels ,...
                                                                  'FontSize',22, ...
                                                                 'TextBoxOpacity',0.8));
@@ -162,18 +149,10 @@ for ii=1:size(image_files_list)
 
                 savePath=fullfile(out_path,file_name);
                 saveas(f, savePath );
-            %error('doneeeeeeeeeeeeeeee')
-        
+                 
         
         end
-        
-       %catch
-           
-           %continue
-        
-       %end
-        
-       
+                   
      end    
     
 
