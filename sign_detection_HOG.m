@@ -1,5 +1,4 @@
 
-%{
 clc;
 clear all;
 close all;
@@ -99,9 +98,9 @@ for ii=1:size(image_files_list)
         %error('done')
         
         
-        %-------------------------------------------------------------
+        %-------------------------------------------
         %step 2: resize, extract HOG and train SVM
-        %-------------------------------------------------------------
+        %-------------------------------------------
         
         
         %resize_image=imresize(image,[64 64]);
@@ -178,20 +177,7 @@ for ii=1:size(image_files_list)
      end    
     
 
-
-%train it !!!!
-%}
-
-
-%-----------------------------------------------------------
-%testing
-%----------------------------------------------------------
-
-
-
-
-
-
-%dictedLabels = predict(classifier, testing_features);
-%confMat = confusionmat(testing_labels, predictedLabels);
-%helperDisplayConfusionMatrix(confMat)
+%generate confusion matrix
+dictedLabels = predict(classifier, testing_features);
+confMat = confusionmat(testing_labels, predictedLabels);
+helperDisplayConfusionMatrix(confMat)
