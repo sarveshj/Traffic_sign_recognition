@@ -52,8 +52,7 @@ for index=1:size(class_name,2)
         %-------------------------------------------------------------
         
         
-        resize_image=imresize(image,[64 64]);
-        resize_image=imbinarize(rgb2gray(resize_image));
+        
         
         %[hog_features,viz]= extractHOGFeatures(resize_image,'CellSize',[5 5]);
         
