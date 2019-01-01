@@ -2,7 +2,7 @@
 Recognize traffic sign using Histogram of Oriented Gradients (HOG) and Colorspace based features. Support Vector Machines (SVM) is used for classifying images from KITTI Dataset. Details regarding implementation are included in Report file.
 
 # Detection Result
-![][result.png]
+![](result.png)
 
 
 
